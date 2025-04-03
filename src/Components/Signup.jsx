@@ -2,7 +2,7 @@ import React from 'react'
 import authService from '../appwrite/auth'
 import {Link ,useNavigate} from 'react-router-dom'
 import {login} from '../store/authSlice'
-import {Button, Input, Logo} from './index.js'
+import {Button, Logo} from './index.js'
 import {useDispatch} from 'react-redux'
 import {useForm} from 'react-hook-form' 
 
@@ -48,7 +48,7 @@ const Signup = () => {
 
                 <form onSubmit={handleSubmit(create)}>
                     <div className='space-y-5'>
-                        <Input
+                        {/* <Input
                         label="Full Name: "
                         placeholder="Enter your full name"
                         {...register("name", {
@@ -73,7 +73,7 @@ const Signup = () => {
                         placeholder="Enter your password"
                         {...register("password", {
                             required: true,})}
-                        />
+                        /> */}
                         <Button type="submit" className="w-full">
                             Create Account
                         </Button>
