@@ -1,31 +1,31 @@
-import React from 'react'
-import authService from '../appwrite/auth'
+import React, {useState} from 'react'
+import authService from '../appwrite/auth.js'
 import {Link ,useNavigate} from 'react-router-dom'
-import {login} from '../store/authSlice'
-import {Button, Logo} from './index.js'
+import {login} from '../store/authSlice.js'
+import {Button, Input, Logo} from './index.js'
 import {useDispatch} from 'react-redux'
-import {useForm} from 'react-hook-form' 
+import {useForm} from 'react-hook-form'
 
-const Signup = () => {
+function Signup() {
+    const navigate = useNavigate()
+    const [error, setError] = useState("")
+    const dispatch = useDispatch()
+    const {register, handleSubmit} = useForm()
 
-  const navigate = useNavigate()
-  const [error, setError] = useState("")
-  const dispatch = useDispatch()
-  const {register, handleSubmit} = useForm()
-  const create=async(data)=>{
-    setError("")
-    try{
-    const userData =await authService.getCurrentUser(data)
-      if(userData){
-        const userData=await authService.getCurrentUser()
-      if(userData)dispatch(login(userData));
-      navigate("/")
-      } 
-    
-    } catch (error) {
-      setError(error.message)
-  }
-  }
+    const create = async(data) => {
+        setError("")
+        try {
+            const userData = await authService.createAccount(data)
+            if (userData) {
+                const userData = await authService.getCurrentUser()
+                if(userData) dispatch(login(userData));
+                navigate("/")
+            }
+        } catch (error) {
+            setError(error.message)
+        }
+    }
+
   return (
     <div className="flex items-center justify-center">
             <div className={`mx-auto w-full max-w-lg bg-gray-100 rounded-xl p-10 border border-black/10`}>
@@ -48,7 +48,7 @@ const Signup = () => {
 
                 <form onSubmit={handleSubmit(create)}>
                     <div className='space-y-5'>
-                        {/* <Input
+                        <Input
                         label="Full Name: "
                         placeholder="Enter your full name"
                         {...register("name", {
@@ -73,7 +73,7 @@ const Signup = () => {
                         placeholder="Enter your password"
                         {...register("password", {
                             required: true,})}
-                        /> */}
+                        />
                         <Button type="submit" className="w-full">
                             Create Account
                         </Button>
